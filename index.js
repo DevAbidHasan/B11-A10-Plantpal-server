@@ -3,7 +3,7 @@ require('dotenv').config()
 const cors =require('cors');
 const app = express ();
 const port = process.env.PORT || 3000;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 app.use(cors());
 app.use(express.json());
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.mcbondo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -27,6 +27,14 @@ async function run() {
     app.post("/plants", async (req,res)=>{
         const newPlant =  req.body;
         const result = await plantCollection.insertOne(newPlant);
+        res.send(result);
+    })
+
+
+    app.get("/plants/:id",async (req,res)=>{
+        const id=req.params.id;
+        const query = {_id : new ObjectId(id)};
+        const result = await plantCollection.findOne(query);
         res.send(result);
     })
 
