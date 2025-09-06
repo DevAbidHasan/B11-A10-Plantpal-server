@@ -31,6 +31,12 @@ async function run() {
     })
 
 
+    app.get("/plants", async (req,res)=>{
+        const result = await plantCollection.find().toArray();
+        res.send(result);
+    })
+
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -53,6 +59,8 @@ app.get("/", (req,res)=>{
 app.get("/add-plant", (req,res)=>{
     res.send("this is add plant page");
 })
+
+
 
 app.listen(port, ()=>{
     console.log("port number : ", port);
