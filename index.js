@@ -38,6 +38,13 @@ async function run() {
         res.send(result);
     })
 
+    app.get("/my-plants/:email", async (req,res)=>{
+        const email = req.params.email;
+        const query = { email : email};
+        const result = await plantCollection.find(query).toArray();
+        res.send(result);
+    })
+
 
     app.get("/plants", async (req,res)=>{
         const result = await plantCollection.find().toArray();
